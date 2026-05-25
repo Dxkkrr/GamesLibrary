@@ -12,7 +12,19 @@ async function getPopularGames() {
       `https://api.rawg.io/api/games?ordering=-rating&key=${API_KEY}`
     )
 
-    games.value = response.data.results
+    games.value = response.data.results.filter((game) => {
+  const name = game.name.toLowerCase()
+
+  const blockedWords = [
+    'porn',
+    'sex',
+    'hentai',
+    'adult',
+    'nsfw'
+  ]
+
+  return !blockedWords.some(word => name.includes(word))
+})
   } catch (error) {
     console.log(error)
   }

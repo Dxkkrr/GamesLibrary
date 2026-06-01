@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import { filterGames } from '@/utils/filter'
 
 const games = ref([])
 
@@ -12,19 +13,7 @@ async function getPopularGames() {
       `https://api.rawg.io/api/games?ordering=-rating&key=${API_KEY}`
     )
 
-    games.value = response.data.results.filter((game) => {
-  const name = game.name.toLowerCase()
-
-  const blockedWords = [
-    'porn',
-    'sex',
-    'hentai',
-    'adult',
-    'nsfw'
-  ]
-
-  return !blockedWords.some(word => name.includes(word))
-})
+    games.value = filterGames(response.data.results)
   } catch (error) {
     console.log(error)
   }
@@ -43,21 +32,14 @@ onMounted(() => {
     </h1>
 
     <p class="text-zinc-400 mb-10 text-lg">
-      Os jogos mais bem avaliados da RAWG
+      Os Jogos mais bem Avaliados na API do RAWG
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-      <div
-        v-for="game in games"
-        :key="game.id"
-        class="bg-zinc-800 rounded-2xl overflow-hidden shadow-xl hover:scale-105 hover:shadow-green-500/20 duration-300"
-      >
-        <img
-          :src="game.background_image"
-          :alt="game.name"
-          class="w-full h-60 object-cover"
-        >
+      <div v-for="game in games" :key="game.id"
+        class="bg-zinc-800 rounded-2xl overflow-hidden shadow-xl hover:scale-105 hover:shadow-white duration-300">
+        <img :src="game.background_image" :alt="game.name" class="w-full h-60 object-cover">
 
         <div class="p-5">
 
@@ -66,21 +48,21 @@ onMounted(() => {
           </h2>
 
           <div class="flex items-center justify-between mb-2">
-            <span class="text-green-400 font-semibold">
+            <span class="text-white font-semibold">
               ⭐ {{ game.rating }}
             </span>
 
-            <span class="text-zinc-400 text-sm">
+            <span class="text-zinc-400 text-sm font-semibold">
               {{ new Date(game.released).toLocaleDateString('pt-BR') }}
             </span>
           </div>
 
           <div class="flex flex-wrap gap-2 mt-4">
-            <span
-              v-for="genre in game.genres"
-              :key="genre.id"
-              class="bg-green-500/20 text-green-300 px-3 py-1 rounded-full text-sm"
-            >
+            <span class="bg-pur-500/20 text-white rounded-full text-sm">
+              Genero:
+            </span>
+            <span v-for="genre in game.genres" :key="genre.id"
+              class="text-gray-400 rounded-full text-sm font-bold text-shadow-md hover:text-white transition-colors cursor-pointer">
               {{ genre.name }}
             </span>
           </div>

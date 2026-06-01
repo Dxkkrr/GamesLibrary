@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import HomeView from '../views/HomeView.vue'
 import PopularView from '@/views/PopularView.vue'
+import GameDetailView from '@/views/GameDetailView.vue'
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
   {
     path: '/popular',
     component: PopularView
+  },
+
+  {
+    path: '/game/:id',
+    component: GameDetailView
   }
 ]
 

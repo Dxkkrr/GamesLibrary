@@ -7,7 +7,7 @@ const route = useRoute()
 
 const game = ref(null)
 
-const API_KEY = 'SUA_API_KEY'
+const API_KEY = '0ee8e9fea4684d2c8a8cb60b1cf93e81'
 
 async function getGameDetails() {
   try {

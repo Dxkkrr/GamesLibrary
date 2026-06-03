@@ -88,7 +88,7 @@ onMounted(() => {
 
           <RouterLink
             :to="`/game/${game.id}`"
-            class="mt-auto block text-center bg-purple-700 hover:bg-purple-800 text-white py-3 rounded-xl duration-300 font-semibold"
+            class="mt-auto block text-center bg-gray-600 hover:bg-gray-700 text-white py-3 rounded-xl duration-300 font-semibold"
           >
             Descrição
           </RouterLink>

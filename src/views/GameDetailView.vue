@@ -1,13 +1,18 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 
 const route = useRoute()
+const router = useRouter()
 
 const game = ref(null)
 
-const API_KEY = 'SUA_API_KEY'
+const API_KEY = '0ee8e9fea4684d2c8a8cb60b1cf93e81'
+
+function goBack() {
+  router.back()
+}
 
 async function getGameDetails() {
   try {
@@ -27,33 +32,29 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    v-if="game"
-    class="bg-zinc-900 min-h-screen p-10"
-  >
-    <img
-      :src="game.background_image"
-      :alt="game.name"
-      class="w-full max-h-[500px] object-cover rounded-3xl mb-8"
-    >
+  <div v-if="game" class="bg-zinc-900 min-h-screen p-10">
+
+    <button @click="goBack" class="mb-6 bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-3 rounded-3xl duration-300 font-semibold"><-- Voltar</button>
+
+    <img :src="game.background_image" :alt="game.name" class="w-full max-h-[500px] object-cover rounded-3xl mb-8">
 
     <h1 class="text-5xl font-bold text-white mb-4">
       {{ game.name }}
     </h1>
 
     <div class="flex gap-6 mb-8">
-      <span class="text-purple-400 text-xl">
+      <span class="text-white text-xl">
         ⭐ {{ game.rating }}
       </span>
 
-      <span class="text-zinc-400">
+      <span class="text-zinc-400 mt-auto">
         {{ new Date(game.released).toLocaleDateString('pt-BR') }}
       </span>
     </div>
 
-    <div
-      class="text-zinc-300 leading-8 text-lg"
-      v-html="game.description"
-    ></div>
+    <div class="text-zinc-300 leading-8 text-lg" v-html="game.description"></div>
+
+    <p class="text-zinc-500 italic mt-8">Descrição fornecida automaticamente pela API</p>
+
   </div>
 </template>

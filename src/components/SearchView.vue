@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import axios from 'axios'
 import { filterGames } from '@/utils/filter'
@@ -22,9 +22,11 @@ async function searchGames() {
   }
 }
 
-onMounted(() => {
-  searchGames()
-})
+watch(
+  () => route.params.query,
+  searchGames,
+  {immediate: true}
+)
 </script>
 
 <template>
@@ -40,16 +42,8 @@ onMounted(() => {
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-      <div
-        v-for="game in games"
-        :key="game.id"
-        class="bg-zinc-800 rounded-2xl overflow-hidden shadow-xl flex flex-col"
-      >
-        <img
-          :src="game.background_image"
-          :alt="game.name"
-          class="w-full h-60 object-cover"
-        >
+      <div v-for="game in games" :key="game.id" class="bg-zinc-800 rounded-2xl overflow-hidden shadow-xl flex flex-col">
+        <img :src="game.background_image" :alt="game.name" class="w-full h-60 object-cover">
 
         <div class="p-5 flex-1 flex flex-col">
 
@@ -67,10 +61,8 @@ onMounted(() => {
             </span>
           </div>
 
-          <RouterLink
-            :to="`/game/${game.id}`"
-            class="mt-auto block text-center bg-gray-600 hover:bg-gray-700 text-white py-3 rounded-xl duration-300 font-semibold"
-          >
+          <RouterLink :to="`/game/${game.id}`"
+            class="mt-auto block text-center bg-gray-600 hover:bg-gray-700 text-white py-3 rounded-xl duration-300 font-semibold">
             Descrição
           </RouterLink>
 

@@ -38,7 +38,7 @@ onMounted(() => {
   >
     <button
       @click="goBack"
-      class="mb-6 bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-3 rounded-3xl duration-300 font-semibold"
+      class="mb-6 bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-3 rounded-3xl duration-300 font-semibold cursor-pointer"
     >
       ← Voltar
     </button>
